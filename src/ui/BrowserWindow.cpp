@@ -25,6 +25,7 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLineEdit>
 #include <QLocale>
 #include <QMenu>
 #include <QMenuBar>
@@ -101,7 +102,7 @@ BrowserWindow::BrowserWindow(MtpWorker *worker, TransferManager *transfers, QWid
 
     m_reloadTimer.setSingleShot(true);
     m_reloadTimer.setInterval(150);
-    connect(&m_reloadTimer, &QTimer::timeout, this, &BrowserWindow::reload);
+    connect(&m_reloadTimer, &QTimer::timeout, this, &BrowserWindow::reloadUnlessEditing);
     m_loadingTimer.setSingleShot(true);
     m_loadingTimer.setInterval(300);
     connect(&m_loadingTimer, &QTimer::timeout, this, [this] {
@@ -224,6 +225,14 @@ void BrowserWindow::buildUi()
                 openItems(sel);
             else
                 openItems({src.row()});
+        });
+    }
+    for (QAbstractItemView *view : {static_cast<QAbstractItemView *>(m_list), static_cast<QAbstractItemView *>(m_grid)}) {
+        connect(view->itemDelegate(), &QAbstractItemDelegate::closeEditor, this, [this] {
+            if (m_reloadAfterEdit) {
+                m_reloadAfterEdit = false;
+                m_reloadTimer.start();
+            }
         });
     }
     connect(m_list->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this] {
@@ -829,6 +838,21 @@ void BrowserWindow::onOperationFinished(quint64 req, bool ok, const QString &err
     reload();
 }
 
+void BrowserWindow::reloadUnlessEditing()
+{
+    // New Folder: the worker reports the operation and then the folder change,
+    // so this timer fires right after the inline editor for the new name has
+    // opened. Reloading now would reset the model and close the editor.
+    bool editing = false;
+    for (QLineEdit *ed : currentView()->viewport()->findChildren<QLineEdit *>(Qt::FindDirectChildrenOnly))
+        editing = editing || ed->isVisible();
+    if (editing) {
+        m_reloadAfterEdit = true;
+        return;
+    }
+    reload();
+}
+
 void BrowserWindow::onFolderChanged(quint32 storageId, quint32 parentId)
 {
     if (m_connected && m_loc.isValid() && storageId == m_loc.storageId && parentId == currentFolderId())
@@ -898,8 +922,11 @@ void BrowserWindow::selectNames(const QStringList &names, bool edit)
     if (first.isValid()) {
         sm->setCurrentIndex(first, QItemSelectionModel::NoUpdate);
         currentView()->scrollTo(first);
-        if (edit)
+        if (edit) {
+            // Give the view keyboard focus first so the name field gets the cursor.
+            currentView()->setFocus(Qt::OtherFocusReason);
             currentView()->edit(first);
+        }
     }
 }
 
@@ -1352,10 +1379,48 @@ void BrowserWindow::handleItemsDropped(const QByteArray &data, quint32 targetFol
     for (const mtp::ItemRef &it : items)
         if (it.id == target)
             return; // dropped onto itself
-    if (copy)
+    if (copy) {
         m_worker->copyOnDevice(items, m_loc.storageId, target);
-    else if (items.first().parentId != target)
-        m_worker->moveOnDevice(items, m_loc.storageId, target);
+        return;
+    }
+    if (items.first().parentId == target)
+        return;
+    // Ask before moving: a quick or accidental drag must not reorganise the
+    // phone. Queued so the dialog opens after the drag session has ended.
+    const quint32 storageId = m_loc.storageId;
+    QMetaObject::invokeMethod(this, [this, items, storageId, target] {
+        if (!m_connected || m_loc.storageId != storageId)
+            return;
+        if (confirmMove(items, target))
+            m_worker->moveOnDevice(items, storageId, target);
+    }, Qt::QueuedConnection);
+}
+
+bool BrowserWindow::confirmMove(const mtp::ItemRefList &items, quint32 targetFolderId)
+{
+    QString targetName;
+    if (targetFolderId == currentFolderId() && !m_loc.path.isEmpty()) {
+        targetName = m_loc.path.last().name;
+    } else {
+        const int row = m_model->rowForId(targetFolderId);
+        if (row >= 0)
+            targetName = m_model->entry(row).name;
+    }
+    QMessageBox box(this);
+    box.setIcon(QMessageBox::Question);
+    if (items.size() == 1)
+        box.setText(targetName.isEmpty() ? tr("Move \"%1\" to this folder?").arg(items.first().name)
+                                         : tr("Move \"%1\" to \"%2\"?").arg(items.first().name, targetName));
+    else
+        box.setText(targetName.isEmpty() ? tr("Move %n items to this folder?", nullptr, int(items.size()))
+                                         : tr("Move %n items to \"%1\"?", nullptr, int(items.size())).arg(targetName));
+    box.setInformativeText(tr("They will be removed from their current folder on the phone."));
+    QPushButton *move = box.addButton(tr("Move"), QMessageBox::AcceptRole);
+    QPushButton *cancel = box.addButton(QMessageBox::Cancel);
+    box.setDefaultButton(cancel);   // Return must not confirm an accidental drop
+    box.setEscapeButton(cancel);
+    box.exec();
+    return box.clickedButton() == move;
 }
 
 void BrowserWindow::showContextMenu(const QPoint &pos)

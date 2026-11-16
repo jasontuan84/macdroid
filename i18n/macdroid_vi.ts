@@ -264,11 +264,15 @@
     </message>
     <message numerus="yes">
         <source>%n item(s)</source>
-        <translation><numerusform>%n mục</numerusform></translation>
+        <translation>
+            <numerusform>%n mục</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n selected</source>
-        <translation><numerusform>đã chọn %n</numerusform></translation>
+        <translation>
+            <numerusform>đã chọn %n</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 available</source>
@@ -324,7 +328,9 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to delete these %n items permanently?</source>
-        <translation><numerusform>Bạn có chắc muốn xóa vĩnh viễn %n mục này?</numerusform></translation>
+        <translation>
+            <numerusform>Bạn có chắc muốn xóa vĩnh viễn %n mục này?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Phones connected over MTP have no Trash. You can&apos;t undo this action.</source>
@@ -355,12 +361,42 @@
         <translation>Các mục này được sao chép từ một điện thoại khác.</translation>
     </message>
     <message>
+        <source>Move &quot;%1&quot; to this folder?</source>
+        <translation>Di chuyển &quot;%1&quot; vào thư mục này?</translation>
+    </message>
+    <message>
+        <source>Move &quot;%1&quot; to &quot;%2&quot;?</source>
+        <translation>Di chuyển &quot;%1&quot; vào &quot;%2&quot;?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to this folder?</source>
+        <translation>
+            <numerusform>Di chuyển %n mục vào thư mục này?</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to &quot;%1&quot;?</source>
+        <translation>
+            <numerusform>Di chuyển %n mục vào &quot;%1&quot;?</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>They will be removed from their current folder on the phone.</source>
+        <translation>Các mục sẽ bị xóa khỏi thư mục hiện tại trên điện thoại.</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation>Di chuyển</translation>
+    </message>
+    <message>
         <source>Copy &quot;%1&quot;</source>
         <translation>Sao chép &quot;%1&quot;</translation>
     </message>
     <message numerus="yes">
         <source>Copy %n Items</source>
-        <translation><numerusform>Sao chép %n mục</numerusform></translation>
+        <translation>
+            <numerusform>Sao chép %n mục</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -442,7 +478,9 @@
     </message>
     <message numerus="yes">
         <source>Deleting %n items</source>
-        <translation><numerusform>Đang xóa %n mục</numerusform></translation>
+        <translation>
+            <numerusform>Đang xóa %n mục</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not delete &quot;%1&quot;.</source>
@@ -454,7 +492,9 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items to phone</source>
-        <translation><numerusform>Đang sao chép %n mục vào điện thoại</numerusform></translation>
+        <translation>
+            <numerusform>Đang sao chép %n mục vào điện thoại</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot; to the phone.</source>
@@ -466,7 +506,9 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items to Mac</source>
-        <translation><numerusform>Đang sao chép %n mục vào Mac</numerusform></translation>
+        <translation>
+            <numerusform>Đang sao chép %n mục vào Mac</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot; to the Mac.</source>
@@ -478,7 +520,9 @@
     </message>
     <message numerus="yes">
         <source>Moving %n items</source>
-        <translation><numerusform>Đang di chuyển %n mục</numerusform></translation>
+        <translation>
+            <numerusform>Đang di chuyển %n mục</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not move &quot;%1&quot;.</source>
@@ -490,7 +534,9 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items</source>
-        <translation><numerusform>Đang sao chép %n mục</numerusform></translation>
+        <translation>
+            <numerusform>Đang sao chép %n mục</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot;.</source>
@@ -555,11 +601,15 @@
     </message>
     <message numerus="yes">
         <source>about %n s</source>
-        <translation><numerusform>khoảng %n giây</numerusform></translation>
+        <translation>
+            <numerusform>khoảng %n giây</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>about %n min</source>
-        <translation><numerusform>khoảng %n phút</numerusform></translation>
+        <translation>
+            <numerusform>khoảng %n phút</numerusform>
+        </translation>
     </message>
     <message>
         <source>Transfers</source>

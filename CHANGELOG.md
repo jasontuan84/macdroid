@@ -10,8 +10,26 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- App icon, generated at build time from `docs/app-icon.png` on a macOS-style
+  rounded square.
+- `scripts/build-dmg.sh` builds a Release DMG in `releases/`: the app with Qt,
+  libmtp and libusb bundled, an Applications shortcut to drag the app onto,
+  a background with an arrow, and the app icon on the volume and the file.
+
+### Changed
+
+- Moving items by dragging them onto another folder on the phone now asks for
+  confirmation (Cancel is the default button), so a quick or accidental drag
+  does not reorganise the phone.
+
 ### Fixed
 
+- New Folder: the name field opened and closed again right away. A second,
+  automatic reload of the folder reset the list while the name was being
+  edited. Automatic reloads now wait until editing ends, and the name field
+  gets keyboard focus.
 - The browser window could not be moved. Its content was pushed below a
   32 px title bar "safe area", so drags in the title bar area never reached
   the toolbar or sidebar. The content now fills the whole window and window

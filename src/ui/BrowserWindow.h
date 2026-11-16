@@ -77,6 +77,8 @@ private:
     void goForward();
     void goUp();
     void reload();
+    void reloadUnlessEditing();
+    bool confirmMove(const mtp::ItemRefList &items, quint32 targetFolderId);
     quint32 currentFolderId() const;
     QString storageName(quint32 storageId) const;
     void setChromeVisible(bool visible);
@@ -172,6 +174,9 @@ private:
     QSet<quint64> m_pendingNewFolders;
     QStringList m_selectAfterLoad;
     bool m_editAfterLoad = false;
+    // A change notification arrived while a name was being edited; reload
+    // once the editor closes (reloading resets the model and kills the editor).
+    bool m_reloadAfterEdit = false;
     QSet<quint32> m_thumbRequested;
     QHash<quint32, QStringList> m_rootFolders; // storage -> root folder names
     QTimer m_reloadTimer;

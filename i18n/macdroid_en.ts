@@ -262,11 +262,17 @@
     </message>
     <message numerus="yes">
         <source>%n item(s)</source>
-        <translation><numerusform>%n item</numerusform><numerusform>%n items</numerusform></translation>
+        <translation>
+            <numerusform>%n item</numerusform>
+            <numerusform>%n items</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n selected</source>
-        <translation><numerusform>%n selected</numerusform><numerusform>%n selected</numerusform></translation>
+        <translation>
+            <numerusform>%n selected</numerusform>
+            <numerusform>%n selected</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1 available</source>
@@ -322,7 +328,10 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to delete these %n items permanently?</source>
-        <translation><numerusform>Are you sure you want to delete this item permanently?</numerusform><numerusform>Are you sure you want to delete these %n items permanently?</numerusform></translation>
+        <translation>
+            <numerusform>Are you sure you want to delete this item permanently?</numerusform>
+            <numerusform>Are you sure you want to delete these %n items permanently?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Phones connected over MTP have no Trash. You can&apos;t undo this action.</source>
@@ -353,12 +362,45 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Move &quot;%1&quot; to this folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move &quot;%1&quot; to &quot;%2&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to this folder?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n items to &quot;%1&quot;?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>They will be removed from their current folder on the phone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copy &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>Copy %n Items</source>
-        <translation><numerusform>Copy %n Item</numerusform><numerusform>Copy %n Items</numerusform></translation>
+        <translation>
+            <numerusform>Copy %n Item</numerusform>
+            <numerusform>Copy %n Items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -440,7 +482,10 @@
     </message>
     <message numerus="yes">
         <source>Deleting %n items</source>
-        <translation><numerusform>Deleting %n item</numerusform><numerusform>Deleting %n items</numerusform></translation>
+        <translation>
+            <numerusform>Deleting %n item</numerusform>
+            <numerusform>Deleting %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not delete &quot;%1&quot;.</source>
@@ -452,7 +497,10 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items to phone</source>
-        <translation><numerusform>Copying %n item to phone</numerusform><numerusform>Copying %n items to phone</numerusform></translation>
+        <translation>
+            <numerusform>Copying %n item to phone</numerusform>
+            <numerusform>Copying %n items to phone</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot; to the phone.</source>
@@ -464,7 +512,10 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items to Mac</source>
-        <translation><numerusform>Copying %n item to Mac</numerusform><numerusform>Copying %n items to Mac</numerusform></translation>
+        <translation>
+            <numerusform>Copying %n item to Mac</numerusform>
+            <numerusform>Copying %n items to Mac</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot; to the Mac.</source>
@@ -476,7 +527,10 @@
     </message>
     <message numerus="yes">
         <source>Moving %n items</source>
-        <translation><numerusform>Moving %n item</numerusform><numerusform>Moving %n items</numerusform></translation>
+        <translation>
+            <numerusform>Moving %n item</numerusform>
+            <numerusform>Moving %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not move &quot;%1&quot;.</source>
@@ -488,7 +542,10 @@
     </message>
     <message numerus="yes">
         <source>Copying %n items</source>
-        <translation><numerusform>Copying %n item</numerusform><numerusform>Copying %n items</numerusform></translation>
+        <translation>
+            <numerusform>Copying %n item</numerusform>
+            <numerusform>Copying %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>Could not copy &quot;%1&quot;.</source>
@@ -553,11 +610,17 @@
     </message>
     <message numerus="yes">
         <source>about %n s</source>
-        <translation><numerusform>about %n s</numerusform><numerusform>about %n s</numerusform></translation>
+        <translation>
+            <numerusform>about %n s</numerusform>
+            <numerusform>about %n s</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>about %n min</source>
-        <translation><numerusform>about %n min</numerusform><numerusform>about %n min</numerusform></translation>
+        <translation>
+            <numerusform>about %n min</numerusform>
+            <numerusform>about %n min</numerusform>
+        </translation>
     </message>
     <message>
         <source>Transfers</source>
