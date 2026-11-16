@@ -52,7 +52,18 @@ set(SOURCES
     src/platform/MacPlatform.h     src/platform/MacPlatform.mm
 )
 
-qt_add_executable(MacDroid MACOSX_BUNDLE ${SOURCES})
+# App icon: generated from docs/app-icon.png at build time.
+set(APP_ICON_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/docs/app-icon.png)
+set(APP_ICON_ICNS ${CMAKE_CURRENT_BINARY_DIR}/MacDroid.icns)
+add_custom_command(
+    OUTPUT ${APP_ICON_ICNS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make-icns.sh ${APP_ICON_SOURCE} ${APP_ICON_ICNS}
+    DEPENDS ${APP_ICON_SOURCE} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make-icns.sh ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compose-icon.swift
+    COMMENT "Generating MacDroid.icns"
+    VERBATIM)
+set_source_files_properties(${APP_ICON_ICNS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+
+qt_add_executable(MacDroid MACOSX_BUNDLE ${SOURCES} ${APP_ICON_ICNS})
 
 qt_add_translations(MacDroid
     TS_FILES i18n/macdroid_en.ts i18n/macdroid_vi.ts
@@ -83,6 +94,7 @@ set_target_properties(MacDroid PROPERTIES
     INSTALL_RPATH "@executable_path/../Frameworks"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Info.plist.in
     MACOSX_BUNDLE_GUI_IDENTIFIER com.bliksund.macdroid
+    MACOSX_BUNDLE_ICON_FILE MacDroid.icns
     MACOSX_BUNDLE_BUNDLE_NAME MacDroid
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}

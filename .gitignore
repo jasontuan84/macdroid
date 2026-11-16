@@ -13,3 +13,6 @@ build/
 
 # macOS
 .DS_Store
+
+# Release builds (scripts/build-dmg.sh)
+releases/*.dmg
