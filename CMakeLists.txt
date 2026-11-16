@@ -7,7 +7,7 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "Minimum macOS version")
 project(MacDroid VERSION 1.0.0
     DESCRIPTION "Android file browser for macOS over MTP"
     HOMEPAGE_URL "https://tuanquynh.com"
-    LANGUAGES CXX OBJCXX)
+    LANGUAGES C CXX OBJCXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -18,6 +18,16 @@ set(CMAKE_OBJCXX_STANDARD 20)
 find_package(Qt6 6.10 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBMTP REQUIRED IMPORTED_TARGET libmtp)
+pkg_check_modules(LIBUSB REQUIRED IMPORTED_TARGET libusb-1.0)
+
+# Interposes libusb_reset_device() to stop a libmtp/libusb crash when a phone
+# cannot be opened (see src/platform/UsbResetGuard.c). Must be a dylib: dyld
+# ignores interposing in the main executable.
+add_library(MacDroidUsbGuard SHARED src/platform/UsbResetGuard.c)
+target_link_libraries(MacDroidUsbGuard PRIVATE PkgConfig::LIBUSB)
+set_target_properties(MacDroidUsbGuard PROPERTIES
+    INSTALL_NAME_DIR "@rpath"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MacDroid.app/Contents/Frameworks")
 
 qt_standard_project_setup(I18N_SOURCE_LANGUAGE en I18N_TRANSLATED_LANGUAGES vi)
 
@@ -56,6 +66,7 @@ target_compile_definitions(MacDroid PRIVATE PROJECT_VERSION_STRING="${PROJECT_VE
 target_link_libraries(MacDroid PRIVATE
     Qt6::Widgets
     PkgConfig::LIBMTP
+    MacDroidUsbGuard
     "-framework AppKit"
     "-framework IOKit"
     "-framework CoreFoundation"
@@ -68,6 +79,8 @@ target_link_libraries(MacDroid PRIVATE
 set_source_files_properties(src/platform/MacPlatform.mm PROPERTIES COMPILE_FLAGS "-fobjc-arc")
 
 set_target_properties(MacDroid PROPERTIES
+    BUILD_RPATH "@executable_path/../Frameworks"
+    INSTALL_RPATH "@executable_path/../Frameworks"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Info.plist.in
     MACOSX_BUNDLE_GUI_IDENTIFIER com.bliksund.macdroid
     MACOSX_BUNDLE_BUNDLE_NAME MacDroid

@@ -270,14 +270,21 @@ void styleBrowserWindow(QWidget *window)
     win.tabbingMode = NSWindowTabbingModeDisallowed;
 }
 
-void startWindowDrag(QWidget *widget)
+bool startWindowDrag(QWidget *widget)
 {
     NSView *view = nativeView(widget);
     NSEvent *event = NSApp.currentEvent;
-    if (!view.window || !event)
-        return;
-    if (event.type == NSEventTypeLeftMouseDown || event.type == NSEventTypeLeftMouseDragged)
-        [view.window performWindowDragWithEvent:event];
+    if (!view.window || !event || event.window != view.window)
+        return false;
+    // Leave the second click of a double-click to Qt (zoom/minimise).
+    if (event.type == NSEventTypeLeftMouseDown && event.clickCount != 1)
+        return false;
+    if (event.type != NSEventTypeLeftMouseDown && event.type != NSEventTypeLeftMouseDragged)
+        return false;
+    // Let the window server move the window: smooth, multi-display aware and
+    // supports macOS 26 edge tiling, unlike moving it from Qt.
+    [view.window performWindowDragWithEvent:event];
+    return true;
 }
 
 void titleBarDoubleClick(QWidget *widget)

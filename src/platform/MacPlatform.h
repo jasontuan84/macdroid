@@ -20,8 +20,9 @@ namespace MacPlatform {
 void setDockIconVisible(bool visible);
 void activateApp();
 void styleBrowserWindow(QWidget *window);
-// Starts a native window move from the current mouse-down (title bar behaviour).
-void startWindowDrag(QWidget *widget);
+// Starts a native window move from the current single-click mouse-down or
+// drag event (title bar behaviour). Returns false if AppKit could not start it.
+bool startWindowDrag(QWidget *widget);
 // Title bar double-click: performs the user's system preference (zoom/minimise).
 void titleBarDoubleClick(QWidget *widget);
 bool isDarkAppearance();

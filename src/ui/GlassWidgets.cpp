@@ -253,7 +253,9 @@ bool WindowMover::eventFilter(QObject *watched, QEvent *event)
         auto *e = static_cast<QMouseEvent *>(event);
         if (e->button() != Qt::LeftButton)
             break;
-        m_dragging = true;
+        // Native drag first; the manual move below is only a fallback for
+        // when AppKit cannot start one (e.g. no matching NSEvent).
+        m_dragging = !MacPlatform::startWindowDrag(w);
         m_offset = e->globalPosition().toPoint() - w->window()->frameGeometry().topLeft();
         return true;
     }
@@ -261,6 +263,10 @@ bool WindowMover::eventFilter(QObject *watched, QEvent *event)
         auto *e = static_cast<QMouseEvent *>(event);
         if (!m_dragging || !(e->buttons() & Qt::LeftButton))
             break;
+        if (MacPlatform::startWindowDrag(w)) {
+            m_dragging = false;
+            return true;
+        }
         w->window()->move(e->globalPosition().toPoint() - m_offset);
         return true;
     }

@@ -81,6 +81,13 @@ BrowserWindow::BrowserWindow(MtpWorker *worker, TransferManager *transfers, QWid
     setUnifiedTitleAndToolBarOnMac(false);
     setWindowFlag(Qt::ExpandedClientAreaHint, true);
     setWindowFlag(Qt::NoTitleBarBackgroundHint, true);
+    // With ExpandedClientAreaHint the title bar becomes a 32 px "safe area"
+    // that Qt adds as a top contents margin by default. That pushed the whole
+    // UI down and left an empty strip owned by the QMainWindow, so presses in
+    // the title bar area never reached the sidebar/toolbar WindowMover and the
+    // window could not be dragged. The sidebar and toolbar already leave room
+    // for the traffic lights, so let the content fill the whole window.
+    setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
     resize(1080, 770); // default size (Finder-like proportions)
     setMinimumSize(940, 500);
 

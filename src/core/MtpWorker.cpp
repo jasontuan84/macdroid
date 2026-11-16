@@ -17,6 +17,9 @@
 #include <cstdlib>
 #include <cstring>
 
+// From MacDroidUsbGuard (src/platform/UsbResetGuard.c).
+extern "C" int macdroid_usb_guard_installed(void);
+
 using namespace mtp;
 
 namespace {
@@ -104,6 +107,10 @@ void MtpWorker::start()
 {
     if (m_thread.joinable())
         return;
+    // Keeps the libusb reset guard linked; without it a phone that cannot be
+    // opened crashes the app inside libmtp/libusb.
+    if (!macdroid_usb_guard_installed())
+        qWarning("MacDroid: USB reset guard missing");
     LIBMTP_Init();
     m_stopping = false;
     m_thread = std::thread([this] { threadMain(); });

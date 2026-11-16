@@ -8,6 +8,20 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - Email: jasontuan.dev@gmail.com
 - Website: https://tuanquynh.com
 
+## [Unreleased]
+
+### Fixed
+
+- The browser window could not be moved. Its content was pushed below a
+  32 px title bar "safe area", so drags in the title bar area never reached
+  the toolbar or sidebar. The content now fills the whole window and window
+  drags are handed to macOS (smooth, works across displays, supports edge
+  tiling).
+- Crash when a phone could not be opened (busy, held by Image Capture or a
+  stale session): libmtp reset the USB device and libusb then crashed on the
+  re-enumerated handle. MacDroid now skips that reset and shows the normal
+  "phone is busy" screen instead.
+
 ## [1.0.0] - 2026-11-16
 
 First release: an Android file browser for macOS 26 (Tahoe) and later that
