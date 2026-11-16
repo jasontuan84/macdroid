@@ -8,7 +8,7 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - Email: jasontuan.dev@gmail.com
 - Website: https://tuanquynh.com
 
-## [Unreleased]
+## [1.0.1] - 2026-11-16
 
 ### Added
 

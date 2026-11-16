@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.21)
 # appearance is always available.
 set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "Minimum macOS version")
 
-project(MacDroid VERSION 1.0.0
+project(MacDroid VERSION 1.0.1
     DESCRIPTION "Android file browser for macOS over MTP"
     HOMEPAGE_URL "https://tuanquynh.com"
     LANGUAGES C CXX OBJCXX)
