@@ -1,0 +1,15 @@
+# Build output
+build/
+*.app/
+
+# Qt Creator
+*.user
+*.user.*
+.qtcreator/
+.qtc_clangd/
+
+# Generated translations
+*.qm
+
+# macOS
+.DS_Store
